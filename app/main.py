@@ -196,7 +196,7 @@ class KeyVaultAgent(object):
 
         client = self._get_client()
         _logger.info('Using vault: %s', vault_base_url)
-        
+
         if secrets_keys is not None:
             for key_info in filter(None, secrets_keys.split(';')):
                 # Secrets are not renamed. They will have same name
@@ -204,7 +204,7 @@ class KeyVaultAgent(object):
                 key_name, key_version, cert_filename, key_filename = self._split_keyinfo(key_info)
                 _logger.info('Retrieving secret name:%s with version: %s output certFileName: %s keyFileName: %s', key_name, key_version, cert_filename, key_filename)
                 secret = client.get_secret(vault_base_url, key_name, key_version)
-
+                
                 if secret.kid is not None:
                     _logger.info('Secret is backing certificate. Dumping private key and certificate.')
                     if secret.content_type == 'application/x-pkcs12':
